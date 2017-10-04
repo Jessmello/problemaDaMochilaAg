@@ -9,8 +9,10 @@ import java.util.List;
 
 public class Util {
 
-    public List<Item> getItens() {
-        String arquivo = "C:\\Users\\Jess\\Desktop\\problemaDaMochilaAG\\arquivoTeste.txt";
+    
+    
+    public List<Item> getItens(String arquivo) {
+//        String arquivo = "C:\\Users\\Jess\\Desktop\\problemaDaMochilaAG\\arquivoTeste.txt";
         BufferedReader br;
         String linha = "";
         List<Item> itens = new ArrayList<Item>();

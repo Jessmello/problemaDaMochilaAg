@@ -27,7 +27,10 @@ public class Roleta {
 
             for (int i = 0; i < population.getPopulacao().size(); i += 1){
                 if (p < proportionalFitnesses.get(i) && parents.size() < 2){
-                    parents.add(population.getPopulacao().get(i));
+                    Cromossomo c = population.getPopulacao().get(i);
+                    parents.add(c);
+                    population.getPopulacao().remove(c);
+                    i--;
                 }
             }
         }
