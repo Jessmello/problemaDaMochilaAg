@@ -27,8 +27,8 @@ public class Util {
                 i.setId(Integer.parseInt(infoItem[j++]));
                 i.setNome(infoItem[j++]);
                 i.setPeso(Integer.parseInt(infoItem[j++]));
-                i.setPreco(Integer.parseInt(infoItem[j++]));
                 i.setVolume(Integer.parseInt(infoItem[j++]));
+                i.setPreco(Integer.parseInt(infoItem[j++]));
                 
                 itens.add(i);
             }

@@ -9,23 +9,33 @@ public class Executor {
     private Populacao populacao = new Populacao();
     private int tamanhoDaPopulacao; // a definir via interface
     private int quantidadeDeGenes;
-    private int volumeMochila = 100; // a definir via interface
-    private int pesoMochila = 100; // a definir via interface
-    private int quantidadeDeGeracoes = 100; // a definir via interface
+    private int volumeMochila; // a definir via interface
+    private int pesoMochila; // a definir via interface
+    private int quantidadeDeGeracoes; // a definir via interface
+    private float probabilidadeDeMutacao;
+    private List<Cromossomo> top3 = new ArrayList<>();
     
+
+    public Executor(String tamanhoDaPopulacao, String volumeMochila, String pesoMochila, String quantidadeDeGeracoes) {
+        this.tamanhoDaPopulacao = Integer.parseInt(tamanhoDaPopulacao);
+        this.volumeMochila = Integer.parseInt(volumeMochila);
+        this.pesoMochila = Integer.parseInt(pesoMochila);
+        this.quantidadeDeGeracoes = Integer.parseInt(quantidadeDeGeracoes);
+    }
+
     public void executarAlgoritmo(List<Item> itens){
+        quantidadeDeGenes = itens.size();
         gerarPopulacaoInicial(itens);
         ativacao();
         for(int i = 0; i < quantidadeDeGeracoes; i++){
             cruzar();
             ativacao();
+            verificarTop3();
         }
         
     }
     
     public void gerarPopulacaoInicial(List<Item> itens) {
-       // List<Item> itens = new Util().getItens(arquivo);
-        
         for (int i = 0; i < tamanhoDaPopulacao; i++) {
             populacao.getPopulacao().get(i).setGenes(itens); // um cromossomo é igual a todos os itens do arquivo
             for (Item item : populacao.getPopulacao().get(i).getGenes()) { // para cada gene do cromossomo, decido (aleatoriamente), se ele vai ou não pra dentro da mochila
@@ -56,64 +66,58 @@ public class Executor {
     
     public void cruzar(){
         int tamNovaPopulacao = 0;
+        List <Cromossomo> novaPopu = new ArrayList<>();
         while(tamNovaPopulacao < tamanhoDaPopulacao){
             List <Cromossomo> pais = new Roleta().select(populacao);
-            Cromossomo a = new Cromossomo();
-            Cromossomo b = new Cromossomo();
-            List<Item> listaA = new ArrayList<>();
-            List<Item> listaB = new ArrayList<>();
+            Cromossomo filhoA = new Cromossomo();
+            Cromossomo filhoB = new Cromossomo();
+            List<Item> genesFilhoA = new ArrayList<>();
+            List<Item> genesFilhoB = new ArrayList<>();
             for(int i = 0; i < quantidadeDeGenes; i++){
                 if(i<(quantidadeDeGenes/2)){
-                    listaA.add(pais.get(0).getGenes().get(i));
-                    listaB.add(pais.get(1).getGenes().get(i));
+                    genesFilhoA.add(pais.get(0).getGenes().get(i));
+                    genesFilhoB.add(pais.get(1).getGenes().get(i));
                     continue;
                 }
-                listaB.add(pais.get(0).getGenes().get(i));
-                listaA.add(pais.get(1).getGenes().get(i));
+                genesFilhoB.add(pais.get(0).getGenes().get(i));
+                genesFilhoA.add(pais.get(1).getGenes().get(i));
             }
+            mutacao(genesFilhoA);
+            mutacao(genesFilhoB);
             tamNovaPopulacao +=2;
-            a.setGenes(listaA);
-            b.setGenes(listaB);
+            filhoA.setGenes(genesFilhoA);
+            filhoB.setGenes(genesFilhoB);
+            novaPopu.add(filhoA);
+            novaPopu.add(filhoB);
         }
+        Populacao novaPopulacao = new Populacao();
+        novaPopulacao.setPopulacao(novaPopu);
     }
+    
+    public void mutacao(List<Item> itensDoCromossomo) {
+        for (Item item : itensDoCromossomo) {
+            if(getRandom() <= probabilidadeDeMutacao){             
+               boolean estaNaMochila = false;
+               if(getRandom() > 0.50000){
+                   estaNaMochila = true;
+               }
+               item.setSelecionado(estaNaMochila);
+            }
+        }
+   }
     
     private float getRandom() {
         return new Random().nextFloat(); 
     }
 
-    public Populacao getPopulacao() {
-        return populacao;
+    private void verificarTop3() {
+        
+        boolean adicionar;
+        for(Cromossomo c : populacao.getPopulacao()){
+            adicionar = top3.size() < 3 ? true : false;
+        }
+        
+        
     }
 
-    public void setPopulacao(Populacao populacao) {
-        this.populacao = populacao;
-    }
-    
-    /**
-     * @return the tamanhoDaPopulacao
-     */
-    public int getTamanhoDaPopulacao() {
-        return tamanhoDaPopulacao;
-    }
-
-    /**
-     * @param tamanhoDaPopulacao the tamanhoDaPopulacao to set
-     */
-    public void setTamanhoDaPopulacao(int tamanhoDaPopulacao) {
-        this.tamanhoDaPopulacao = tamanhoDaPopulacao;
-    }
-
-    /**
-     * @return the quantidadeDeGenes
-     */
-    public int getQuantidadeDeGenes() {
-        return quantidadeDeGenes;
-    }
-
-    /**
-     * @param quantidadeDeGenes the quantidadeDeGenes to set
-     */
-    public void setQuantidadeDeGenes(int quantidadeDeGenes) {
-        this.quantidadeDeGenes = quantidadeDeGenes;
-    }
 }
