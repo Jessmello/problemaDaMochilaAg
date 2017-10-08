@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Executor {
+public class Executor extends Thread{
     
     private Populacao populacao = new Populacao();
     private int tamanhoDaPopulacao; // a definir via interface
@@ -14,30 +14,39 @@ public class Executor {
     private int quantidadeDeGeracoes; // a definir via interface
     private float probabilidadeDeMutacao;
     private List<Cromossomo> top3 = new ArrayList<>();
+    private List<Item> itens;
+    private Interface form;
     
 
-    public Executor(String tamanhoDaPopulacao, String volumeMochila, String pesoMochila, String quantidadeDeGeracoes) {
+    public Executor(String tamanhoDaPopulacao, String volumeMochila, String pesoMochila, String quantidadeDeGeracoes, List<Item> itens, Interface form) {
         this.tamanhoDaPopulacao = Integer.parseInt(tamanhoDaPopulacao);
         this.volumeMochila = Integer.parseInt(volumeMochila);
         this.pesoMochila = Integer.parseInt(pesoMochila);
         this.quantidadeDeGeracoes = Integer.parseInt(quantidadeDeGeracoes);
+        this.itens = itens;
+        this.form = form;
     }
-
-    public void executarAlgoritmo(List<Item> itens){
+    
+    @Override
+    public void run() {
         quantidadeDeGenes = itens.size();
+        
         gerarPopulacaoInicial(itens);
         ativacao();
+        form.imprimirGeracao(populacao, 1);
         for(int i = 0; i < quantidadeDeGeracoes; i++){
             cruzar();
             ativacao();
-            verificarTop3();
+            form.imprimirGeracao(populacao, i+2);
         }
-        
+        verificarTop3();
     }
     
     public void gerarPopulacaoInicial(List<Item> itens) {
         for (int i = 0; i < tamanhoDaPopulacao; i++) {
-            populacao.getPopulacao().get(i).setGenes(itens); // um cromossomo é igual a todos os itens do arquivo
+            Cromossomo c = new Cromossomo();
+            c.setGenes(copiaGenes(itens));
+            populacao.getPopulacao().add(c);// um cromossomo é igual a todos os itens do arquivo
             for (Item item : populacao.getPopulacao().get(i).getGenes()) { // para cada gene do cromossomo, decido (aleatoriamente), se ele vai ou não pra dentro da mochila
                 if (getRandom() > 0.50000) { 
                     item.setSelecionado(true);
@@ -57,7 +66,8 @@ public class Executor {
                     volume += item.getVolume();
                 } 
             }
-            int nota = Math.abs(pesoMochila - peso +  volumeMochila - volume);
+            int nota = Math.abs(pesoMochila - peso);
+                nota += Math.abs(volumeMochila - volume);
             populacao.getPopulacao().get(i).setNota(nota);
             pesoPopulacao += nota;
         }
@@ -92,6 +102,7 @@ public class Executor {
         }
         Populacao novaPopulacao = new Populacao();
         novaPopulacao.setPopulacao(novaPopu);
+        populacao = novaPopulacao;
     }
     
     public void mutacao(List<Item> itensDoCromossomo) {
@@ -111,13 +122,24 @@ public class Executor {
     }
 
     private void verificarTop3() {
-        
         boolean adicionar;
         for(Cromossomo c : populacao.getPopulacao()){
             adicionar = top3.size() < 3 ? true : false;
         }
-        
-        
+    }
+
+    private List<Item> copiaGenes(List<Item> itens) {
+        List<Item> copia = new ArrayList<>();
+        for (Item item : itens) {
+            Item i = new Item();
+            i.setId(item.getId());
+            i.setNome(item.getNome());
+            i.setPeso(item.getPeso());
+            i.setVolume(item.getVolume());
+            i.setPreco(item.getPreco());
+            copia.add(i);
+        }
+        return copia;
     }
 
 }

@@ -1,10 +1,11 @@
 package problemadamochilaag;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Populacao {
     
-    private List<Cromossomo> populacao;
+    private List<Cromossomo> populacao = new ArrayList<>();
     private int pesoPopulacao;
     
 

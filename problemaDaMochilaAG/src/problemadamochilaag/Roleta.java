@@ -1,7 +1,9 @@
 package problemadamochilaag;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 /*
  * Roulette (fitness-proportionate) selection.
@@ -10,28 +12,30 @@ public class Roleta {
     
     public List<Cromossomo> select(Populacao population){
         
-        List<Double> absoluteFitnesses = new LinkedList<Double>();
         List<Double> proportionalFitnesses = new LinkedList<Double>();
 
         double totalFitness = population.getPesoPopulacao();
+        double bestFitness = 0;
 
-        List<Cromossomo> parents = new LinkedList<Cromossomo>();
+        List<Cromossomo> parents = new ArrayList<Cromossomo>();
         
-        for (Double i : absoluteFitnesses){
-            proportionalFitnesses.add(i / totalFitness);
+        for (Cromossomo i : population.getPopulacao()){
+            double fitness = i.getNota() / totalFitness;
+            proportionalFitnesses.add(fitness);
+            if(fitness > bestFitness){
+                bestFitness = fitness;
+            }
         }
       
         while (parents.size() < 2){
             
-            double p = Math.random();
+            double p = new Random().nextFloat();
 
-            for (int i = 0; i < population.getPopulacao().size(); i += 1){
-                if (p < proportionalFitnesses.get(i) && parents.size() < 2){
-                    Cromossomo c = population.getPopulacao().get(i);
-                    parents.add(c);
-                    population.getPopulacao().remove(c);
-                    i--;
-                }
+            int index = (int)(population.getPopulacao().size()*Math.random());
+            if (p < (proportionalFitnesses.get(index)/bestFitness) && parents.size() < 2){
+                Cromossomo c = population.getPopulacao().get(index);
+                parents.add(c);
+                population.getPopulacao().remove(c);
             }
         }
         
