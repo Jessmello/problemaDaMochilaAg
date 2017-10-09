@@ -33,13 +33,15 @@ public class Executor extends Thread{
         
         gerarPopulacaoInicial(itens);
         ativacao();
-        form.imprimirGeracao(populacao, 1);
+        int j = 1;
         for(int i = 0; i < quantidadeDeGeracoes; i++){
             cruzar();
             ativacao();
-            form.imprimirGeracao(populacao, i+2);
+            form.imprimirGeracao(populacao, j++);
         }
         verificarTop3();
+        form.exibirTop3(top3);
+        form.setEnabledExecutar();
     }
     
     public void gerarPopulacaoInicial(List<Item> itens) {
@@ -56,20 +58,28 @@ public class Executor extends Thread{
     }
        
     public void ativacao() {
-        int pesoPopulacao = 0;
+        double pesoPopulacao = 0;
         for (int i = 0; i < tamanhoDaPopulacao; i++) {
-            int peso = 0;
-            int volume = 0;
+            double peso = 0;
+            double volume = 0;
+            int preco = 0;
             for (Item item : populacao.getPopulacao().get(i).getGenes()) {
                 if (item.isSelecionado()) { 
                     peso += item.getPeso();
                     volume += item.getVolume();
+                    preco += item.getPreco();
                 } 
             }
-            int nota = Math.abs(pesoMochila - peso);
-                nota += Math.abs(volumeMochila - volume);
+            populacao.getPopulacao().get(i).setPreco(preco);
+            
+            double nota = (peso/pesoMochila)+pesoMochila;
+            double aux = preco/nota;
+                nota = (volume/volumeMochila)+volumeMochila;
+                nota = aux/nota;
+                nota *= 1000;
             populacao.getPopulacao().get(i).setNota(nota);
             pesoPopulacao += nota;
+            
         }
         populacao.setPesoPopulacao(pesoPopulacao);
     }
@@ -83,6 +93,8 @@ public class Executor extends Thread{
             Cromossomo filhoB = new Cromossomo();
             List<Item> genesFilhoA = new ArrayList<>();
             List<Item> genesFilhoB = new ArrayList<>();
+            int inicio = (int)(quantidadeDeGenes*Math.random());
+            int fim = (int)(quantidadeDeGenes*Math.random());
             for(int i = 0; i < quantidadeDeGenes; i++){
                 if(i<(quantidadeDeGenes/2)){
                     genesFilhoA.add(pais.get(0).getGenes().get(i));
@@ -122,9 +134,23 @@ public class Executor extends Thread{
     }
 
     private void verificarTop3() {
-        boolean adicionar;
         for(Cromossomo c : populacao.getPopulacao()){
-            adicionar = top3.size() < 3 ? true : false;
+            Cromossomo remover = null;
+            boolean adicionar = false;
+            for (Cromossomo cromossomo : top3) {
+                adicionar = false;
+                if(cromossomo.getNota() < c.getNota()){
+                    remover = cromossomo;
+                    adicionar = true;
+                    break;
+                }
+            }
+            if(adicionar || top3.size() < 3){
+                if(remover != null){
+                    top3.remove(remover);
+                }
+                top3.add(c);
+            }
         }
     }
 

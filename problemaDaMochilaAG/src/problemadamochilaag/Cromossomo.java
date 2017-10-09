@@ -5,9 +5,16 @@ import java.util.List;
 
 public class Cromossomo {
     private List<Item> genes = new ArrayList<>();
-    private int nota;
-    private int volume;
-    private int peso;
+    private double nota;
+    private int preco;
+
+    public int getPreco() {
+        return preco;
+    }
+
+    public void setPreco(int preco) {
+        this.preco = preco;
+    }
     /**
      * @return the genes
      */
@@ -25,44 +32,15 @@ public class Cromossomo {
     /**
      * @return the nota
      */
-    public int getNota() {
+    public double getNota() {
         return nota;
     }
 
     /**
      * @param nota the nota to set
      */
-    public void setNota(int nota) {
+    public void setNota(double nota) {
         this.nota = nota;
     }
-
-    /**
-     * @return the volume
-     */
-    public int getVolume() {
-        return volume;
-    }
-
-    /**
-     * @param volume the volume to set
-     */
-    public void setVolume(int volume) {
-        this.volume = volume;
-    }
-
-    /**
-     * @return the peso
-     */
-    public int getPeso() {
-        return peso;
-    }
-
-    /**
-     * @param peso the peso to set
-     */
-    public void setPeso(int peso) {
-        this.peso = peso;
-    }
-
 
 }

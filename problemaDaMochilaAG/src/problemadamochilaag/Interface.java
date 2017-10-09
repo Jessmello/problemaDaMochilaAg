@@ -33,7 +33,7 @@ public class Interface extends javax.swing.JFrame {
                     itensGene += i.getNome() +" - ";
                 }
             }
-            txtAreaGera.append(itensGene + " Nota: "+c.getNota()+"\r\n");
+            txtAreaGera.append(itensGene + " Nota: "+c.getNota()+" Preço: "+c.getPreco()+"\r\n");
         }
         txtAreaGera.append("Nota População: "+p.getPesoPopulacao()+"\r\n");
     }
@@ -60,7 +60,6 @@ public class Interface extends javax.swing.JFrame {
         lblItens = new javax.swing.JLabel();
         btnCarregarItens = new javax.swing.JButton();
         btnVisualizarItens = new javax.swing.JButton();
-        btnStop = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAreaGera = new javax.swing.JTextArea();
@@ -211,8 +210,6 @@ public class Interface extends javax.swing.JFrame {
 
         jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCarregarItens, btnVisualizarItens});
 
-        btnStop.setText("Parar");
-
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Gerações"));
 
         txtAreaGera.setColumns(20);
@@ -247,19 +244,13 @@ public class Interface extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(284, 284, 284)
-                        .addComponent(btnPlay)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnStop, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnPlay)))
                 .addContainerGap())
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnPlay, btnStop});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -272,13 +263,12 @@ public class Interface extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnPlay)
-                    .addComponent(btnStop))
+                .addComponent(btnPlay)
                 .addGap(5, 5, 5))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCarregarItensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarItensActionPerformed
@@ -298,6 +288,9 @@ public class Interface extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "É Necessário carregar os itens antes de executar o algoritmo!");
             return;
         }
+        
+        txtAreaGera.setText("");
+        btnPlay.setEnabled(false);
         new Executor(txtPopulacao.getText(), txtVolume.getText(), txtPeso.getText(), txtGeracoes.getText(), itens, this).start();
     }//GEN-LAST:event_btnPlayActionPerformed
 
@@ -339,7 +332,6 @@ public class Interface extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCarregarItens;
     private javax.swing.JButton btnPlay;
-    private javax.swing.JButton btnStop;
     private javax.swing.JButton btnVisualizarItens;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -360,4 +352,24 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JTextField txtPopulacao;
     private javax.swing.JTextField txtVolume;
     // End of variables declaration//GEN-END:variables
+
+    void setEnabledExecutar() {
+        btnPlay.setEnabled(true);
+    }
+
+    void exibirTop3(List<Cromossomo> top3) {
+        String itensGene;
+        txtAreaGera.append("Melhores Soluções: \r\n");
+        int j=0;
+        for (Cromossomo c : top3) {
+            txtAreaGera.append("Cromossomo: "+ j++ );
+            itensGene = " ";
+            for(Item i : c.getGenes()){
+                if(i.isSelecionado()){
+                    itensGene += i.getNome() +" - ";
+                }
+            }
+            txtAreaGera.append(itensGene + " Nota: "+c.getNota()+" Preço: "+c.getPreco()+"\r\n");
+        }
+    }
 }
