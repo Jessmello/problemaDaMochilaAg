@@ -360,9 +360,9 @@ public class Interface extends javax.swing.JFrame {
     void exibirTop3(List<Cromossomo> top3) {
         String itensGene;
         txtAreaGera.append("Melhores Soluções: \r\n");
-        int j=0;
-        for (Cromossomo c : top3) {
-            txtAreaGera.append("Cromossomo: "+ j++ );
+        for (int j = 0; j< 3; j++) {
+            Cromossomo c = top3.get(j);
+            txtAreaGera.append(j+1 +"º Lugar" );
             itensGene = " ";
             for(Item i : c.getGenes()){
                 if(i.isSelecionado()){

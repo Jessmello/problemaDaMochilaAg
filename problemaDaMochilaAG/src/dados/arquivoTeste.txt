@@ -1,8 +1,8 @@
-1;Lapis;20;20;20
-2;Caneta;50;20;5
-3;Borracha;10;20;5
-4;Caderno;30;20;5
-5;Notebook;15;20;5
-6;Livro;5;20;5
-7;Estojo;5;20;5
+1;Lapis;20;20;200
+2;Caneta;50;20;500
+3;Borracha;10;20;250
+4;Caderno;30;20;50
+5;Notebook;15;20;90
+6;Livro;5;20;45
+7;Estojo;5;20;70
 

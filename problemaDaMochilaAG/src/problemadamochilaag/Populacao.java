@@ -6,7 +6,7 @@ import java.util.List;
 public class Populacao {
     
     private List<Cromossomo> populacao = new ArrayList<>();
-    private double pesoPopulacao;
+    private int pesoPopulacao;
     
 
     public List<Cromossomo> getPopulacao() {
@@ -17,11 +17,11 @@ public class Populacao {
         this.populacao = populacao;
     }
 
-    public double getPesoPopulacao() {
+    public int getPesoPopulacao() {
         return pesoPopulacao;
     }
 
-    public void setPesoPopulacao(double pesoPopulacao) {
+    public void setPesoPopulacao(int pesoPopulacao) {
         this.pesoPopulacao = pesoPopulacao;
     }
     

@@ -1,6 +1,7 @@
 package problemadamochilaag;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -32,15 +33,15 @@ public class Executor extends Thread{
         quantidadeDeGenes = itens.size();
         
         gerarPopulacaoInicial(itens);
-        ativacao();
+        avaliacao();
         int j = 1;
         for(int i = 0; i < quantidadeDeGeracoes; i++){
             cruzar();
-            ativacao();
+            avaliacao();
             form.imprimirGeracao(populacao, j++);
         }
         verificarTop3();
-        form.exibirTop3(top3);
+        form.exibirTop3(populacao.getPopulacao());
         form.setEnabledExecutar();
     }
     
@@ -57,11 +58,11 @@ public class Executor extends Thread{
         }
     }
        
-    public void ativacao() {
-        double pesoPopulacao = 0;
+    public void avaliacao() {
+        int pesoPopulacao = 0;
         for (int i = 0; i < tamanhoDaPopulacao; i++) {
-            double peso = 0;
-            double volume = 0;
+            int peso = 0;
+            int volume = 0;
             int preco = 0;
             for (Item item : populacao.getPopulacao().get(i).getGenes()) {
                 if (item.isSelecionado()) { 
@@ -72,11 +73,16 @@ public class Executor extends Thread{
             }
             populacao.getPopulacao().get(i).setPreco(preco);
             
-            double nota = (peso/pesoMochila)+pesoMochila;
-            double aux = preco/nota;
-                nota = (volume/volumeMochila)+volumeMochila;
-                nota = aux/nota;
-                nota *= 1000;
+            int nota  = preco;
+            if(peso > pesoMochila){
+                nota -= (peso-pesoMochila)*14;
+            }
+            if(volume > volumeMochila){
+                nota -= (volume-volumeMochila)*14;
+            }
+            if(nota <= 0){
+                nota = 1;
+            }
             populacao.getPopulacao().get(i).setNota(nota);
             pesoPopulacao += nota;
             
@@ -91,24 +97,19 @@ public class Executor extends Thread{
             List <Cromossomo> pais = new Roleta().select(populacao);
             Cromossomo filhoA = new Cromossomo();
             Cromossomo filhoB = new Cromossomo();
-            List<Item> genesFilhoA = new ArrayList<>();
-            List<Item> genesFilhoB = new ArrayList<>();
-            int inicio = (int)(quantidadeDeGenes*Math.random());
-            int fim = (int)(quantidadeDeGenes*Math.random());
+            int corte = (int)(quantidadeDeGenes*Math.random());
             for(int i = 0; i < quantidadeDeGenes; i++){
-                if(i<(quantidadeDeGenes/2)){
-                    genesFilhoA.add(pais.get(0).getGenes().get(i));
-                    genesFilhoB.add(pais.get(1).getGenes().get(i));
+                if(i<corte){
+                    filhoA.getGenes().add(pais.get(0).getGenes().get(i));
+                    filhoB.getGenes().add(pais.get(1).getGenes().get(i));
                     continue;
                 }
-                genesFilhoB.add(pais.get(0).getGenes().get(i));
-                genesFilhoA.add(pais.get(1).getGenes().get(i));
+                filhoB.getGenes().add(pais.get(0).getGenes().get(i));
+                filhoA.getGenes().add(pais.get(1).getGenes().get(i));
             }
-            mutacao(genesFilhoA);
-            mutacao(genesFilhoB);
+            mutacao(filhoB.getGenes());
+            mutacao(filhoA.getGenes());
             tamNovaPopulacao +=2;
-            filhoA.setGenes(genesFilhoA);
-            filhoB.setGenes(genesFilhoB);
             novaPopu.add(filhoA);
             novaPopu.add(filhoB);
         }
@@ -134,24 +135,26 @@ public class Executor extends Thread{
     }
 
     private void verificarTop3() {
-        for(Cromossomo c : populacao.getPopulacao()){
-            Cromossomo remover = null;
-            boolean adicionar = false;
-            for (Cromossomo cromossomo : top3) {
-                adicionar = false;
-                if(cromossomo.getNota() < c.getNota()){
-                    remover = cromossomo;
-                    adicionar = true;
-                    break;
-                }
-            }
-            if(adicionar || top3.size() < 3){
-                if(remover != null){
-                    top3.remove(remover);
-                }
-                top3.add(c);
-            }
-        }
+//        for(Cromossomo c : populacao.getPopulacao()){
+//            Cromossomo remover = null;
+//            boolean adicionar = false;
+//            for (Cromossomo cromossomo : top3) {
+//                adicionar = false;
+//                if(cromossomo.getNota() < c.getNota()){
+//                    remover = cromossomo;
+//                    adicionar = true;
+//                    break;
+//                }
+//            }
+//            if(adicionar || top3.size() < 3){
+//                if(remover != null){
+//                    top3.remove(remover);
+//                }
+//                top3.add(c);
+//            }
+//        }
+        Collections.sort(populacao.getPopulacao());
+        
     }
 
     private List<Item> copiaGenes(List<Item> itens) {

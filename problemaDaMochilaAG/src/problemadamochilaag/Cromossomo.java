@@ -3,9 +3,9 @@ package problemadamochilaag;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cromossomo {
+public class Cromossomo implements Comparable{
     private List<Item> genes = new ArrayList<>();
-    private double nota;
+    private int nota;
     private int preco;
 
     public int getPreco() {
@@ -32,15 +32,27 @@ public class Cromossomo {
     /**
      * @return the nota
      */
-    public double getNota() {
+    public int getNota() {
         return nota;
     }
 
     /**
      * @param nota the nota to set
      */
-    public void setNota(double nota) {
+    public void setNota(int nota) {
         this.nota = nota;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Cromossomo c = (Cromossomo) o;
+        if(this.nota > c.nota){
+            return -1;
+        }
+        if(this.nota < c.nota){
+            return 1;
+        }
+        return 0;
     }
 
 }
