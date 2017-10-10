@@ -21,29 +21,33 @@ public class Roleta {
         List<Double> proportionalFitnesses = new LinkedList<Double>();
 
         int totalFitness = population.getPesoPopulacao();
-        double bestFitness = 0;
-
         
         for (Cromossomo i : population.getPopulacao()){
             double fitness = (double)i.getNota() / totalFitness;
             proportionalFitnesses.add(fitness);
-            if(fitness > bestFitness){
-                bestFitness = fitness;
-            }
         }
         
         while (parents.size() < 2){
-            
-            float p = new Random().nextFloat();
-            int index = (int)(population.getPopulacao().size()*Math.random());
-            if (p < (proportionalFitnesses.get(index)/bestFitness)){
-                Cromossomo c = population.getPopulacao().get(index);
-                parents.add(c);
-                population.getPopulacao().remove(c);
-                proportionalFitnesses.remove(index);
-            }
+            parents.add(getParent(population.getPopulacao(), proportionalFitnesses));
         }
         
         return parents;
+    }
+    
+    private Cromossomo getParent(List<Cromossomo> population, List<Double> proportionalFitnesses){
+        float p = new Random().nextFloat();
+        for(int index=0; index < population.size(); index++){
+
+            if (p < (proportionalFitnesses.get(index))){
+                Cromossomo c = population.get(index);
+                population.remove(c);
+                proportionalFitnesses.remove(index);
+                return c;
+            }
+        }
+        Cromossomo c = population.get(population.size()-1);
+        population.remove(c);
+        proportionalFitnesses.remove(population.size()-1);
+        return c;
     }
 }

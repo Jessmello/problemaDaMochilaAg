@@ -33,7 +33,7 @@ public class Interface extends javax.swing.JFrame {
                     itensGene += i.getNome() +" - ";
                 }
             }
-            txtAreaGera.append(itensGene + " Nota: "+c.getNota()+" Preço: "+c.getPreco()+"\r\n");
+            txtAreaGera.append(itensGene +" Preço: "+c.getPreco()+ " - Nota: "+c.getNota()+"\r\n");
         }
         txtAreaGera.append("Nota População: "+p.getPesoPopulacao()+"\r\n");
     }
@@ -59,7 +59,6 @@ public class Interface extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         lblItens = new javax.swing.JLabel();
         btnCarregarItens = new javax.swing.JButton();
-        btnVisualizarItens = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAreaGera = new javax.swing.JTextArea();
@@ -71,12 +70,12 @@ public class Interface extends javax.swing.JFrame {
         jLabel3.setText("Volume");
 
         txtVolume.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtVolume.setText("100");
+        txtVolume.setText("3000");
 
         jLabel4.setText("Peso");
 
         txtPeso.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtPeso.setText("100");
+        txtPeso.setText("3000");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -114,7 +113,7 @@ public class Interface extends javax.swing.JFrame {
         jLabel1.setText("População");
 
         txtPopulacao.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtPopulacao.setText("20");
+        txtPopulacao.setText("200");
 
         jLabel2.setText("Gerações");
 
@@ -182,8 +181,6 @@ public class Interface extends javax.swing.JFrame {
             }
         });
 
-        btnVisualizarItens.setText("Visualizar Itens");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -193,9 +190,7 @@ public class Interface extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblItens, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnVisualizarItens)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(125, 125, 125)
                 .addComponent(btnCarregarItens)
                 .addContainerGap())
         );
@@ -204,11 +199,8 @@ public class Interface extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(lblItens)
                 .addComponent(jLabel5)
-                .addComponent(btnVisualizarItens)
                 .addComponent(btnCarregarItens))
         );
-
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCarregarItens, btnVisualizarItens});
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Gerações"));
 
@@ -332,7 +324,6 @@ public class Interface extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCarregarItens;
     private javax.swing.JButton btnPlay;
-    private javax.swing.JButton btnVisualizarItens;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -369,7 +360,7 @@ public class Interface extends javax.swing.JFrame {
                     itensGene += i.getNome() +" - ";
                 }
             }
-            txtAreaGera.append(itensGene + " Nota: "+c.getNota()+" Preço: "+c.getPreco()+"\r\n");
+            txtAreaGera.append(itensGene +" Preço: "+c.getPreco()+ " - Nota: "+c.getNota()+"\r\n");
         }
     }
 }

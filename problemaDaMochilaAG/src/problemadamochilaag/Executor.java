@@ -80,9 +80,6 @@ public class Executor extends Thread{
             if(volume > volumeMochila){
                 nota -= (volume-volumeMochila)*14;
             }
-            if(nota <= 0){
-                nota = 1;
-            }
             populacao.getPopulacao().get(i).setNota(nota);
             pesoPopulacao += nota;
             
