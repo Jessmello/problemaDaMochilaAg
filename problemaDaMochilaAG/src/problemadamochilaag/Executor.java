@@ -60,6 +60,7 @@ public class Executor extends Thread{
        
     public void avaliacao() {
         int pesoPopulacao = 0;
+        int nota;
         for (int i = 0; i < tamanhoDaPopulacao; i++) {
             int peso = 0;
             int volume = 0;
@@ -73,7 +74,8 @@ public class Executor extends Thread{
             }
             populacao.getPopulacao().get(i).setPreco(preco);
             
-            int nota  = preco;
+            nota  = preco;
+           
             if(peso > pesoMochila){
                 nota -= (peso-pesoMochila)*14;
             }
