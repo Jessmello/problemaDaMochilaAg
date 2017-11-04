@@ -116,7 +116,7 @@
         <Component class="javax.swing.JTextField" name="txtVolume">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="3000"/>
+            <Property name="text" type="java.lang.String" value="500"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
@@ -191,7 +191,7 @@
         <Component class="javax.swing.JTextField" name="txtPopulacao">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="200"/>
+            <Property name="text" type="java.lang.String" value="300"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
@@ -202,7 +202,7 @@
         <Component class="javax.swing.JTextField" name="txtGeracoes">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="100"/>
+            <Property name="text" type="java.lang.String" value="250"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
@@ -213,7 +213,7 @@
         <Component class="javax.swing.JTextField" name="txtMutacao">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="0.01"/>
+            <Property name="text" type="java.lang.String" value="0.2"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -242,7 +242,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="lblItens" pref="340" max="32767" attributes="0"/>
+                  <Component id="lblItens" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                   <Component id="carregando" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="272" max="-2" attributes="0"/>
@@ -378,7 +378,7 @@
                       </Group>
                       <Component id="jScrollPane1" min="-2" pref="420" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="8" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

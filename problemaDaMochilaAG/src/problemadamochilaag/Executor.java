@@ -74,7 +74,7 @@ public class Executor extends Thread{
             }
             populacao.getPopulacao().get(i).setPreco(preco);
             
-            nota  = preco;
+            nota  = preco/14;
            
             if(peso > pesoMochila){
                 nota -= (peso-pesoMochila)*14;
@@ -120,11 +120,7 @@ public class Executor extends Thread{
     public void mutacao(List<Item> itensDoCromossomo) {
         for (Item item : itensDoCromossomo) {
             if(getRandom() <= probabilidadeDeMutacao){             
-               boolean estaNaMochila = false;
-               if(getRandom() > 0.50000){
-                   estaNaMochila = true;
-               }
-               item.setSelecionado(estaNaMochila);
+               item.setSelecionado(!item.isSelecionado());
             }
         }
    }
@@ -134,24 +130,6 @@ public class Executor extends Thread{
     }
 
     private void verificarTop3() {
-//        for(Cromossomo c : populacao.getPopulacao()){
-//            Cromossomo remover = null;
-//            boolean adicionar = false;
-//            for (Cromossomo cromossomo : top3) {
-//                adicionar = false;
-//                if(cromossomo.getNota() < c.getNota()){
-//                    remover = cromossomo;
-//                    adicionar = true;
-//                    break;
-//                }
-//            }
-//            if(adicionar || top3.size() < 3){
-//                if(remover != null){
-//                    top3.remove(remover);
-//                }
-//                top3.add(c);
-//            }
-//        }
         Collections.sort(populacao.getPopulacao());
         
     }

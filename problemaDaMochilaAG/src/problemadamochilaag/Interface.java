@@ -93,7 +93,7 @@ public class Interface extends javax.swing.JFrame {
         jLabel3.setText("Volume");
 
         txtVolume.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtVolume.setText("3000");
+        txtVolume.setText("500");
 
         jLabel4.setText("Peso");
 
@@ -136,17 +136,17 @@ public class Interface extends javax.swing.JFrame {
         jLabel1.setText("População");
 
         txtPopulacao.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtPopulacao.setText("200");
+        txtPopulacao.setText("300");
 
         jLabel2.setText("Gerações");
 
         txtGeracoes.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtGeracoes.setText("100");
+        txtGeracoes.setText("250");
 
         jLabel7.setText("Prob. Mutação");
 
         txtMutacao.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtMutacao.setText("0.01");
+        txtMutacao.setText("0.2");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -212,7 +212,7 @@ public class Interface extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblItens, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+                .addComponent(lblItens, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(35, 35, 35)
                 .addComponent(carregando)
                 .addGap(272, 272, 272)
@@ -341,7 +341,7 @@ public class Interface extends javax.swing.JFrame {
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane2)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

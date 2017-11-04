@@ -1,6 +1,5 @@
 package problemadamochilaag;
 
-import com.sun.prism.impl.BufferUtil;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,7 +12,6 @@ public class Util {
     
     
     public List<Item> getItens(String arquivo) {
-//        String arquivo = "C:\\Users\\Jess\\Desktop\\problemaDaMochilaAG\\arquivoTeste.txt";
         BufferedReader br;
         String linha = "";
         List<Item> itens = new ArrayList<Item>();
